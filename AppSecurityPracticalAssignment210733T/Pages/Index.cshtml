@@ -1,0 +1,132 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using AppSecurityPracticalAssignment210733T.Models;
+@using Microsoft.AspNetCore.DataProtection;
+@inject SignInManager<CustomerUser> SignInManager
+@inject UserManager<CustomerUser> UserManager
+
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+
+    var dataProtectionProvider = DataProtectionProvider.Create("EncryptData");
+    var protector = dataProtectionProvider.CreateProtector("MySecretKey");
+    var creditCardUnEncrypted = protector.Unprotect(user.creditCardNo?? "empty");
+
+    
+    
+}
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        <div class="text-center">
+            <section style="background-color: #eee;">
+                <div class="container py-5">
+                  
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <img src="@user.imageURL" alt="avatar"
+                                     class="rounded-circle img-fluid" style="width: 150px;">
+                                    <h5 class="my-3">@user.fullName</h5>
+                                    <p class="text-muted mb-3">About Me</p>
+                                    <p class="text-muted mb-1">@Model.AboutMeUnEncoded</p>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Full Name</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@user.fullName</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Email</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@user.Email</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Mobile Number</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@user.mobileNo</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Gender</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@user.gender</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Delivery Address</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@user.deliveryAddress</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Credit Card</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@creditCardUnEncrypted</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Password Hash</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@user.PasswordHash</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+        <h3 class="display-2">Welcome, Please Log In to access web your Fresh Farm Market Account</h3>
+        <br>
+            <img src="https://source.unsplash.com/random/1600x900?farm" style="height:600px">
+        </div>
+    }
+}

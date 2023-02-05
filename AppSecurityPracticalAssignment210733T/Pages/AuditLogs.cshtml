@@ -1,0 +1,30 @@
+﻿@page
+@model AppSecurityPracticalAssignment210733T.Pages.AuditLogsModel
+@{
+}
+<h1>Audit Logs</h1>
+<br />
+<table class="table table-hover">
+   <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Timestamp</th>
+      <th scope="col">Description</th>
+      <th scope="col">LoggedEmailUser</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var obj in Model.AuditLogs)
+	{
+        <tr>
+          <th scope="row">@obj.Id</th>
+          <td>@obj.Timestamp</td>
+          <td>@obj.Description</td>
+          <td>@obj.LoggedEmailUser</td>
+          <td>@obj.Action</td>
+        </tr>
+    }
+    
+  </tbody>
+</table>

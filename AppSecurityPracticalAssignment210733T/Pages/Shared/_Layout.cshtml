@@ -1,0 +1,88 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AppSecurityPracticalAssignment210733T.Models;
+@inject SignInManager<CustomerUser> SignInManager
+@inject UserManager<CustomerUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AppSecurityPracticalAssignment210733T</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AppSecurityPracticalAssignment210733T.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">AppSecurityPracticalAssignment210733T</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @{
+                            if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/UpdatePassword">Update Password</a>
+                                </li>
+                            }else{
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Register">Register</a>
+                                </li>
+                            }
+                        }
+                        
+                        
+                    </ul>
+                    @{
+                        if (SignInManager.IsSignedIn(User))
+                        {
+                            <span>@user.UserName&nbsp;&nbsp;&nbsp;</span>
+                            
+                            
+                            <p>&nbsp;</p>
+                            <a class="btn btn-danger" style="color:white" href="/Logout">Logout</a>
+                            
+
+                           
+                        }
+                        
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        @await Html.PartialAsync("_FlashMessage")
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+	
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

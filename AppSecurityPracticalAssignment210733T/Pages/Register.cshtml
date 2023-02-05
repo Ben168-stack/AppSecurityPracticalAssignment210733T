@@ -1,0 +1,161 @@
+﻿@page
+@model AppSecurityPracticalAssignment210733T.Pages.RegisterModel
+@{
+}
+
+@using Microsoft.Extensions.Options
+@using AppSecurityPracticalAssignment210733T.Models;
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+
+<style>
+    .divider:after,
+    .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+    }
+</style>
+
+
+
+<section class="vh-100">
+    <h1>Register Form</h1>
+    <div class="container py-5 h-100">
+        <form enctype="multipart/form-data" method="post">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+                <input type="file" accept="image/*" asp-for="Upload" class="form-control" onchange="showImgPreview(this)" />
+			    <br />
+			    <img id="imgPreview" class="rounded-circle" style="height:300px;width:300px;object-fit:cover" src="/uploads/user.png" />
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <!-- username input -->
+                    <div class="form-outline mb-4">
+                        <input asp-for="@Model.RModel.fullName" type="text" class="form-control form-control-lg" />
+                        <label class="form-label">Full Name</label>
+                        <span asp-validaton-for="@Model.RModel.fullName" class="text-danger"></span>
+                    </div>
+
+                    <!-- Credit Card input -->
+
+                    <div class="form-outline mb-4">
+                        <input asp-for="@Model.RModel.creditCardNo" type="text" class="form-control form-control-lg" />
+                        <label class="form-label">Credit Card Number</label>
+                        <span asp-validaton-for="@Model.RModel.creditCardNo" class="text-danger"></span>
+                    </div>
+
+                    <!-- Gender input -->
+
+                    <div class="form-outline mb-4">
+                        <select class="form-control" asp-for="@Model.RModel.gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <label class="form-label">Gender</label>
+                        <span asp-validaton-for="@Model.RModel.gender" class="text-danger"></span>
+                    </div>
+
+                    <!-- Mobile Number input -->
+
+                    <div class="form-outline mb-4">
+                        <input type="text" class="form-control form-control-lg" asp-for="@Model.RModel.mobileNo" />
+                        <label class="form-label" for="form1Example13">Mobile Number</label>
+                        <span asp-validaton-for="@Model.RModel.mobileNo" class="text-danger"></span>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4" >
+                        <input type="email" class="form-control form-control-lg" asp-for="@Model.RModel.Email" />
+                        <label class="form-label">Email address</label>
+                        <span asp-validaton-for="@Model.RModel.Email" class="text-danger"></span>
+
+                    </div>
+
+
+                    <!-- Delivery Address input -->
+
+                    <div class="form-outline mb-4">
+                        <input type="text" class="form-control form-control-lg" asp-for="@Model.RModel.deliveryAddress" />
+                        <label class="form-label">Delivery Address</label>
+                        <span asp-validaton-for="@Model.RModel.deliveryAddress" class="text-danger"></span>
+                    </div>
+
+                    <!-- About Me -->
+                    <div class="form-outline mb-4" >
+                        <textarea class="form-control" rows="3" asp-for="@Model.RModel.aboutMe"></textarea>
+                        <label class="form-label">About Me</label>
+                        <span asp-validaton-for="@Model.RModel.aboutMe" class="text-danger"></span>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" class="form-control form-control-lg" asp-for="@Model.RModel.Password" />
+                        <label class="form-label">Password</label>
+                        <span asp-validaton-for="@Model.RModel.Password" class="text-danger"></span>
+                    </div>
+
+                    <!-- Confirm Password input -->
+                    <div class="form-outline mb-4"> 
+                        <input type="text" class="form-control form-control-lg" asp-for="@Model.RModel.ConfirmPassword" />
+                        <label class="form-label">Confirm Password</label>
+                        <span asp-validaton-for="@Model.RModel.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center mb-4">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" checked />
+                            <label class="form-check-label" for="form1Example3"> Remember me </label>
+                        </div>
+                        <a href="/ForgetPassword">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+
+                   
+
+               
+            </div>
+        </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    function showImgPreview(input) {
+        if (input.files[0]) {
+            var uploadimg = new FileReader(); uploadimg.onload = function (displayimg) {
+                $("#imgPreview").attr('src', displayimg.target.result);
+            }
+            uploadimg.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleCaptchaConfig.Value.SiteKey"></script>
+
+    <script>
+        console.log("Script Here")
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleCaptchaConfig.Value.SiteKey', { action: 'submit' }).then(function (token) {
+                // Add your logic to submit to your backend server here.
+                console.log("Token Here")
+                console.log(token)
+                document.getElementById("LoginViewModelToken").value = token
+            });
+        });
+
+
+
+    </script>
