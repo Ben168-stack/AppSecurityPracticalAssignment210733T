@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppSecurityPracticalAssignment210733T.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230204150609_initial-create")]
+    [Migration("20230205094738_initial-create")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -127,12 +127,13 @@ namespace AppSecurityPracticalAssignment210733T.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("pastPassword1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("pastPassword2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("timeBeforePasswordReset")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

@@ -55,6 +55,13 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                 return Redirect("/");
             }
 
+            if (user.timeBeforePasswordReset > DateTime.Now)
+            {
+                TempData["FlashMessage.Text"] = $"You just reset your password please wait for 3 minutes before setting a new password ";
+                TempData["FlashMessage.Type"] = "danger";
+                return Page();
+            }
+
             if (checkHashedPasswords.VerifyHashedPassword(user, user.pastPassword1, ConfirmPassword) == PasswordVerificationResult.Success)
             {
                 TempData["FlashMessage.Text"] = "New password can't be same as last 2 passwords";

@@ -58,7 +58,7 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                 return Page();
             }
 
-            if(user.timeBeforePasswordReset < DateTime.Now)
+            if(user.timeBeforePasswordReset > DateTime.Now)
             {
                 TempData["FlashMessage.Text"] = $"You just reset your password please wait for 3 minutes before setting a new password ";
                 TempData["FlashMessage.Type"] = "danger";
@@ -105,7 +105,7 @@ namespace AppSecurityPracticalAssignment210733T.Pages
 
             TempData["FlashMessage.Text"] = "Successfully update password! You have been logged out to ensure your password change works.";
             TempData["FlashMessage.Type"] = "success";
-            return RedirectToPage("/");
+            return RedirectToPage("/Login");
         }
     }
 }
