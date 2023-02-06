@@ -100,6 +100,8 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                     deliveryAddress = RModel.deliveryAddress,
                     imageURL = RModel.imageURL,
                     aboutMe = encodedStringUserAboutMe,
+                    EmailConfirmed = true,
+                    TwoFactorEnabled = true,
 
                 };
                 var result = await _userManager.CreateAsync(user, RModel.Password);

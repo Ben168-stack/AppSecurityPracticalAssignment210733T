@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Text;
-using AppSecurityPracticalAssignment210733T.Services;
-using AppSecurityPracticalAssignment210733T.Models;
 using AppSecurityPracticalAssignment210733T.ViewModels;
 
 namespace AppSecurityPracticalAssignment210733T.Pages

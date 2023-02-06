@@ -78,7 +78,12 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                     AuditLog.Action = "Login";
                     _auditLogService.AddAuditLog(AuditLog);
                     return RedirectToPage("Index");
+                }else if(identityResult.RequiresTwoFactor)
+                {
+                    return Redirect($"/TwoFactorAuthentication?email={LModel.Email}");
                 }
+
+
                 ModelState.AddModelError("", "Username or Password incorrect");
             }
 
