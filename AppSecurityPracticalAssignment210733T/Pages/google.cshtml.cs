@@ -54,8 +54,8 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                         TempData["FlashMessage.Text"] = string.Format("You have not registered an account with us with this email.");
                         return Redirect("/Login");
                     }
-                    
-                    
+                    await _userManager.UpdateSecurityStampAsync(user);
+
                     await _userManager.AddLoginAsync(user, info); //adds exteranl login info that links the email together 
                     await _signInManager.SignInAsync(user, isPersistent: true);
                     HttpContext.Session.SetString("email", email);

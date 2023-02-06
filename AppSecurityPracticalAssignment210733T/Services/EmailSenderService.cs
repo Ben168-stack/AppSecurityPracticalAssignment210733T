@@ -6,12 +6,14 @@ namespace AppSecurityPracticalAssignment210733T.Services
 {
     public class EmailSenderService
     {
+
         private const string EMAIL_SENDER = "freshfarmmarketbusiness@gmail.com";
         private readonly EmailConfiguration _emailConfiguration;
-
-        public EmailSenderService(EmailConfiguration emailConfiguration)
+        private readonly EmailName _emailName;
+        public EmailSenderService(EmailConfiguration emailConfiguration, EmailName emailName)
         {
             _emailConfiguration = emailConfiguration;
+            _emailName = emailName;
         }
 
         public async Task SendEmailAsync(string emailAddressReceiver, string subject, string message)

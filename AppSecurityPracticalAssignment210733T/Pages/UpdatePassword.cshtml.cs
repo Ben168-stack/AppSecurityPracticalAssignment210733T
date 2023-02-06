@@ -80,7 +80,7 @@ namespace AppSecurityPracticalAssignment210733T.Pages
             }
             user.pastPassword2 = user.pastPassword1;
             user.pastPassword1 = user.PasswordHash;
-            user.timeBeforePasswordReset = DateTime.Now.AddMinutes(3);
+            user.timeBeforePasswordReset = DateTime.Now.AddSeconds(40);
             user.maxPasswordAge = DateTime.Now.AddDays(30); //DateTime.Now.AddSeconds(10);
             
             var result = await _userManager.ChangePasswordAsync(user, OldPassword,Password);

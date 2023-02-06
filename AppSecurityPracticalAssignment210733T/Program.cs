@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<IdentityOptions>(opts =>
 {
     opts.Lockout.AllowedForNewUsers = true;
-    opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+    opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(10);
     opts.Lockout.MaxFailedAccessAttempts = 3;
 });
 
@@ -38,6 +38,16 @@ var emailConfig = builder.Configuration
         .GetSection("SmtpEmail")
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
+
+var emailNameConfig = builder.Configuration
+        .GetSection("EmailSender")
+        .Get<EmailName>();
+builder.Services.AddSingleton(emailNameConfig);
+
+var adminPasswordConfig = builder.Configuration
+        .GetSection("AdminPassword")
+        .Get<AdminPassword>();
+builder.Services.AddSingleton(adminPasswordConfig);
 
 
 

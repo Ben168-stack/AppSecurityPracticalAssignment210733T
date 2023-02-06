@@ -1,4 +1,5 @@
 ﻿using AppSecurityPracticalAssignment210733T.Models;
+using AppSecurityPracticalAssignment210733T.Settings;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
@@ -10,12 +11,14 @@ namespace AppSecurityPracticalAssignment210733T.Services
         private readonly SignInManager<CustomerUser> _signInManager;
         private readonly UserManager<CustomerUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly AdminPassword _adminPassword;
 
-        public PrepopulateUserRoleService(SignInManager<CustomerUser> signInManager, UserManager<CustomerUser> userManager, RoleManager<IdentityRole> roleManager)
+        public PrepopulateUserRoleService(SignInManager<CustomerUser> signInManager, UserManager<CustomerUser> userManager, RoleManager<IdentityRole> roleManager,AdminPassword adminPassword)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
+            _adminPassword = adminPassword;
         }
 
         const string adminEmail = "admin@mail.com";
@@ -49,7 +52,7 @@ namespace AppSecurityPracticalAssignment210733T.Services
 
                 };
 
-                var result = await _userManager.CreateAsync(adminUser, "Admin123456$");
+                var result = await _userManager.CreateAsync(adminUser, _adminPassword.Password);
                 if (result.Succeeded)
                 {
                     if (!await _userManager.IsInRoleAsync(adminUser, "Admin")) await _userManager.AddToRoleAsync(adminUser, "Admin");
