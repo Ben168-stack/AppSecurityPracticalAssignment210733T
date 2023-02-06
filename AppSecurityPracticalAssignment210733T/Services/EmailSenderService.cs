@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using AppSecurityPracticalAssignment210733T.Settings;
+using Microsoft.Extensions.Options;
 using System.Net.Mail;
 
 namespace AppSecurityPracticalAssignment210733T.Services
@@ -6,6 +7,12 @@ namespace AppSecurityPracticalAssignment210733T.Services
     public class EmailSenderService
     {
         private const string EMAIL_SENDER = "freshfarmmarketbusiness@gmail.com";
+        private readonly EmailConfiguration _emailConfiguration;
+
+        public EmailSenderService(EmailConfiguration emailConfiguration)
+        {
+            _emailConfiguration = emailConfiguration;
+        }
 
         public async Task SendEmailAsync(string emailAddressReceiver, string subject, string message)
         {
@@ -28,15 +35,12 @@ namespace AppSecurityPracticalAssignment210733T.Services
             // Port 465 for SSL communication
             client.Port = 587;
             // Provide authentication information with Gmail SMTP server to authenticate your sender account
-            client.Credentials = new System.Net.NetworkCredential(EMAIL_SENDER, "");
+            client.Credentials = new System.Net.NetworkCredential(EMAIL_SENDER, _emailConfiguration.API);
 
             await client.SendMailAsync(newMail); // Send the constructed mail
             Console.WriteLine("Email Sent");
 
-
-
         }
 
-        
     }
 }

@@ -5,6 +5,7 @@ using AppSecurityPracticalAssignment210733T.Models;
 using AppSecurityPracticalAssignment210733T.ViewModels;
 using Microsoft.AspNetCore.DataProtection;
 using System.Text;
+using AppSecurityPracticalAssignment210733T.Services;
 
 namespace AppSecurityPracticalAssignment210733T.Pages
 {
@@ -30,6 +31,7 @@ namespace AppSecurityPracticalAssignment210733T.Pages
 
         public void OnGet()
         {
+            
         }
 
         //Save data into the database
@@ -38,6 +40,25 @@ namespace AppSecurityPracticalAssignment210733T.Pages
            
             if (ModelState.IsValid)
             {
+                String password = RModel.Password;
+                PasswordScore passwordStrengthScore = PasswordScoreService.CheckStrength(password);
+
+                switch (passwordStrengthScore)
+                {
+                    case PasswordScore.Blank:
+                    case PasswordScore.VeryWeak:
+                    case PasswordScore.Weak:
+                        // Show an error message to the user
+                        TempData["FlashMessage.Type"] = "danger";
+                        TempData["FlashMessage.Text"] = string.Format("Password is still weak");
+                        break;
+                    case PasswordScore.Medium:
+                    case PasswordScore.Strong:
+                    case PasswordScore.VeryStrong:
+                        // Password deemed strong enough, allow user to be added to database etc
+                        break;
+                }
+
                 var dataProtectionProvider = DataProtectionProvider.Create("EncryptData");
                 var protector = dataProtectionProvider.CreateProtector("MySecretKey");
 

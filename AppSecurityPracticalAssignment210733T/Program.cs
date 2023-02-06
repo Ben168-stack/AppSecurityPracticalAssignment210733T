@@ -32,13 +32,14 @@ builder.Services.AddDataProtection();
 builder.Services.AddScoped<AuditLogService>();
 builder.Services.AddScoped<EmailSenderService>();
 builder.Services.AddScoped<PrepopulateUserRoleService>();
-
+builder.Services.AddScoped<PasswordScoreService>();
 
 var emailConfig = builder.Configuration
-        .GetSection("EmailConfiguration")
+        .GetSection("SmtpEmail")
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
-builder.Services.AddScoped<IEmailService, EmailService>();
+
+
 
 builder.Services.AddSession(options =>
 {
