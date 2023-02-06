@@ -33,6 +33,7 @@ namespace AppSecurityPracticalAssignment210733T.Models
         
         public DateTime? timeBeforePasswordReset { get; set; } = null;
 
+        public DateTime? maxPasswordAge { get; set; } = DateTime.Now.AddDays(30); //DateTime.Now.AddSeconds(10);
 
 
     }

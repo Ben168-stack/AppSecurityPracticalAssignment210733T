@@ -25,7 +25,7 @@
         <form enctype="multipart/form-data" method="post">
         <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-8 col-lg-7 col-xl-6">
-                <input type="file" accept="image/*" asp-for="Upload" class="form-control" onchange="showImgPreview(this)" />
+                <input type="file" accept=".jpg" asp-for="Upload" class="form-control" onchange="showImgPreview(this)" />
 			    <br />
 			    <img id="imgPreview" class="rounded-circle" style="height:300px;width:300px;object-fit:cover" src="/uploads/user.png" />
             </div>
@@ -92,14 +92,14 @@
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <input type="text" class="form-control form-control-lg" asp-for="@Model.RModel.Password" />
+                        <input type="password" class="form-control form-control-lg" asp-for="@Model.RModel.Password" />
                         <label class="form-label">Password</label>
                         <span asp-validaton-for="@Model.RModel.Password" class="text-danger"></span>
                     </div>
 
                     <!-- Confirm Password input -->
                     <div class="form-outline mb-4"> 
-                        <input type="text" class="form-control form-control-lg" asp-for="@Model.RModel.ConfirmPassword" />
+                        <input type="password" class="form-control form-control-lg" asp-for="@Model.RModel.ConfirmPassword" />
                         <label class="form-label">Confirm Password</label>
                         <span asp-validaton-for="@Model.RModel.ConfirmPassword" class="text-danger"></span>
                     </div>

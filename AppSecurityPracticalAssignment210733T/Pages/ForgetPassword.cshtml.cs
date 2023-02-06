@@ -61,9 +61,6 @@ namespace AppSecurityPracticalAssignment210733T.Pages
 
             await _emailSender.SendEmailAsync(Email, "Reset Password", "Reset your password with this link "+ $"{link}.");
 
-            
-
-
 
             return Page();
         }

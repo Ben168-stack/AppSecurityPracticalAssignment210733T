@@ -28,7 +28,7 @@ namespace AppSecurityPracticalAssignment210733T.Services
             // Port 465 for SSL communication
             client.Port = 587;
             // Provide authentication information with Gmail SMTP server to authenticate your sender account
-            client.Credentials = new System.Net.NetworkCredential(EMAIL_SENDER, "xcaqpjkeflmvlhku");
+            client.Credentials = new System.Net.NetworkCredential(EMAIL_SENDER, "");
 
             await client.SendMailAsync(newMail); // Send the constructed mail
             Console.WriteLine("Email Sent");

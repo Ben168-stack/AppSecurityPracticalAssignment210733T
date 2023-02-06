@@ -55,6 +55,9 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                     using var fileStream = new FileStream(imagePath, FileMode.Create);
                     await Upload.CopyToAsync(fileStream);
                     RModel.imageURL = string.Format("/{0}/{1}", uploadsFolder, imageFile);
+
+
+                    
                 }
                 else
                 {

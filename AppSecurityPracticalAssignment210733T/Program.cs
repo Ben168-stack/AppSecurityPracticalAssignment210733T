@@ -31,6 +31,7 @@ builder.Services.AddDataProtection();
 //Services
 builder.Services.AddScoped<AuditLogService>();
 builder.Services.AddScoped<EmailSenderService>();
+builder.Services.AddScoped<PrepopulateUserRoleService>();
 
 
 var emailConfig = builder.Configuration

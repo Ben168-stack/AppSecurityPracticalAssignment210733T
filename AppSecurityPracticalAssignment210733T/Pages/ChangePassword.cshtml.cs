@@ -84,6 +84,8 @@ namespace AppSecurityPracticalAssignment210733T.Pages
             }
             user.pastPassword2 = user.pastPassword1;
             user.pastPassword1 = user.PasswordHash;
+            user.timeBeforePasswordReset = DateTime.Now.AddMinutes(3);
+            user.maxPasswordAge = DateTime.Now.AddDays(30); //DateTime.Now.AddSeconds(10);
 
             var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await userManager.ResetPasswordAsync(user, token, Password);

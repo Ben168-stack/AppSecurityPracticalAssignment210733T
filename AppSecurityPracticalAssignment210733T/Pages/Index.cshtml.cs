@@ -45,6 +45,19 @@ namespace AppSecurityPracticalAssignment210733T.Pages
             {
                 AboutMeUnEncoded = "Hi I am Member";
             }
+
+            if (user == null)
+            {
+                return Redirect("/Login");
+            }
+
+            if(user.maxPasswordAge < DateTime.Now)
+            {
+                TempData["FlashMessage.Type"] = "danger";
+                TempData["FlashMessage.Text"] = string.Format("Your password has expired please update your password");
+                return Redirect("/UpdatePassword");
+            }
+            
             
 
             return Page();

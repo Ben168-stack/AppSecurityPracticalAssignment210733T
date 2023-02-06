@@ -70,9 +70,7 @@ namespace AppSecurityPracticalAssignment210733T.Pages
                 TempData["FlashMessage.Text"] = "New password can't be same as last 2 passwords";
                 TempData["FlashMessage.Type"] = "danger";
                 return Page();
-            }
-
-            
+            }         
 
             if(checkHashedPasswords.VerifyHashedPassword(user, user.PasswordHash, ConfirmPassword) == PasswordVerificationResult.Success)
             {
@@ -83,7 +81,8 @@ namespace AppSecurityPracticalAssignment210733T.Pages
             user.pastPassword2 = user.pastPassword1;
             user.pastPassword1 = user.PasswordHash;
             user.timeBeforePasswordReset = DateTime.Now.AddMinutes(3);
-            //user.PasswordHash = _userManager.PasswordHasher.HashPassword(ConfirmPassword);
+            user.maxPasswordAge = DateTime.Now.AddDays(30); //DateTime.Now.AddSeconds(10);
+            
             var result = await _userManager.ChangePasswordAsync(user, OldPassword,Password);
 
 

@@ -22,17 +22,20 @@ namespace AppSecurityPracticalAssignment210733T.Pages
 
         private readonly SignInManager<CustomerUser> signInManager;
         private readonly UserManager<CustomerUser> userManager;
-
         private readonly AuditLogService _auditLogService;
-        public LoginModel(SignInManager<CustomerUser> signInManager, GoogleCaptchaService googleCaptchaService, AuditLogService auditLogService, UserManager<CustomerUser> userManager)
+        private readonly PrepopulateUserRoleService _prepopulateUserRoleService;
+        public LoginModel(SignInManager<CustomerUser> signInManager, GoogleCaptchaService googleCaptchaService, AuditLogService auditLogService, UserManager<CustomerUser> userManager, PrepopulateUserRoleService prepopulateUserRoleService)
         {
             this.signInManager = signInManager;
             _googleCaptchaService = googleCaptchaService;
             _auditLogService = auditLogService;
             this.userManager = userManager;
+            _prepopulateUserRoleService = prepopulateUserRoleService;
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            await _prepopulateUserRoleService.AdminAccountPrepopulateDB();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -86,8 +89,6 @@ namespace AppSecurityPracticalAssignment210733T.Pages
 
         public async Task<IActionResult> OnPostGoogleauthAsync()
         {
-
-
             return new ChallengeResult("Google",signInManager.ConfigureExternalAuthenticationProperties("Google", "/google"));
         }
     }

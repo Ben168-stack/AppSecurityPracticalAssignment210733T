@@ -1,10 +1,12 @@
 using AppSecurityPracticalAssignment210733T.Models;
 using AppSecurityPracticalAssignment210733T.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AppSecurityPracticalAssignment210733T.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class AuditLogsModel : PageModel
     {
         private readonly AuthDbContext _db;
@@ -19,7 +21,7 @@ namespace AppSecurityPracticalAssignment210733T.Pages
 
         public void OnGet()
         {
-            AuditLogs = _db.AuditLog;
+            AuditLogs = _db.AuditLog.OrderBy(x => x.Timestamp).ToList();
         }
     }
 }
