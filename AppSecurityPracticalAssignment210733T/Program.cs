@@ -39,16 +39,6 @@ var emailConfig = builder.Configuration
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 
-var emailNameConfig = builder.Configuration
-        .GetSection("EmailSender")
-        .Get<EmailName>();
-builder.Services.AddSingleton(emailNameConfig);
-
-var adminPasswordConfig = builder.Configuration
-        .GetSection("AdminPassword")
-        .Get<AdminPassword>();
-builder.Services.AddSingleton(adminPasswordConfig);
-
 
 
 builder.Services.AddSession(options =>

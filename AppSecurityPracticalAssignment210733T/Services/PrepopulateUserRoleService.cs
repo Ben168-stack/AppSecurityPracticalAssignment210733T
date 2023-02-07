@@ -11,14 +11,14 @@ namespace AppSecurityPracticalAssignment210733T.Services
         private readonly SignInManager<CustomerUser> _signInManager;
         private readonly UserManager<CustomerUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AdminPassword _adminPassword;
+        
 
-        public PrepopulateUserRoleService(SignInManager<CustomerUser> signInManager, UserManager<CustomerUser> userManager, RoleManager<IdentityRole> roleManager,AdminPassword adminPassword)
+        public PrepopulateUserRoleService(SignInManager<CustomerUser> signInManager, UserManager<CustomerUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
-            _adminPassword = adminPassword;
+            
         }
 
         const string adminEmail = "admin@mail.com";
@@ -52,7 +52,7 @@ namespace AppSecurityPracticalAssignment210733T.Services
 
                 };
 
-                var result = await _userManager.CreateAsync(adminUser, _adminPassword.Password);
+                var result = await _userManager.CreateAsync(adminUser, "Admin123456$");
                 if (result.Succeeded)
                 {
                     if (!await _userManager.IsInRoleAsync(adminUser, "Admin")) await _userManager.AddToRoleAsync(adminUser, "Admin");
